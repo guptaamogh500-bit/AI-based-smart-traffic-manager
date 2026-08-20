@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>UrbanFlow — Adaptive Junction Control</title>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="logo-section">
+
+            <div class="logo-dot"></div>
+
+            <div>
+                <h1>UrbanFlow</h1>
+                <p>Adaptive Junction Control</p>
+            </div>
+
+        </div>
+
+        <div class="system-status">
+
+            <span class="online">
+                ● System Online
+            </span>
+
+            <span id="clock">
+                2025-05-24 10:31:42
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN GRID ================= -->
+
+    <main class="main-grid">
+
+
+        <!-- ================= LEFT SECTION ================= -->
+
+        <section class="left-section">
+
+
+            <!-- VIDEO CARD -->
+
+            <div class="card video-card">
+
+                <div class="video-header">
+
+                    <div class="video-info">
+
+                        <span>
+                            🎥 Recorded Video Input
+                        </span>
+
+                        <span class="status-tag">
+                            ● YOLO
+                        </span>
+
+                        <span class="status-tag">
+                            ● Tracking online
+                        </span>
+
+                        <span class="status-tag">
+                            ● <span id="activeIDs">28</span> active IDs
+                        </span>
+
+                    </div>
+
+                    <span id="videoTime">
+                        2025-05-24 10:31:42
+                    </span>
+
+                </div>
+
+
+                <!-- TRAFFIC SCENE -->
+
+                <div class="traffic-scene">
+
+                    <div class="city"></div>
+
+                    <div class="horizontal-road"></div>
+
+                    <div class="vertical-road"></div>
+
+
+                    <!-- ROAD LINES -->
+
+                    <div class="road-line line1"></div>
+                    <div class="road-line line2"></div>
+                    <div class="road-line line3"></div>
+
+
+                    <!-- CROSSWALKS -->
+
+                    <div class="crosswalk top"></div>
+                    <div class="crosswalk bottom"></div>
+                    <div class="crosswalk left"></div>
+                    <div class="crosswalk right"></div>
+
+
+                    <!-- VEHICLES -->
+
+                    <div class="vehicle bus bus1">
+                        <span>bus</span>
+                    </div>
+
+                    <div class="vehicle car car1">
+                        <span>car</span>
+                    </div>
+
+                    <div class="vehicle car car2">
+                        <span>car</span>
+                    </div>
+
+                    <div class="vehicle car car3">
+                        <span>car</span>
+                    </div>
+
+                    <div class="vehicle truck truck1">
+                        <span>truck</span>
+                    </div>
+
+                    <div class="vehicle car car4">
+                        <span>car</span>
+                    </div>
+
+                    <div class="vehicle bus bus2">
+                        <span>bus</span>
+                    </div>
+
+                    <div class="vehicle car car5">
+                        <span>car</span>
+                    </div>
+
+                    <div class="vehicle bike bike1">
+                        <span>bike</span>
+                    </div>
+
+                    <div class="vehicle bike bike2">
+                        <span>bike</span>
+                    </div>
+
+                    <div class="vehicle bike bike3">
+                        <span>bike</span>
+                    </div>
+
+                    <div class="vehicle car car6">
+                        <span>car</span>
+                    </div>
+
+                    <div class="vehicle car car7">
+                        <span>car</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+<!-- TRAFFIC TABLE -->
+            <div class="card traffic-table">
+                <div class="table-header">
+                    <div>Approach</div>
+                    <div>Direction</div>
+                    <div>Status</div>
+                    <div>Vehicles (count)</div>
+                    <div>Queue Length (m)</div>
+                    <div>Pressure Score</div>
+                </div>
+
+                <div class="table-row" id="row_Lane_North">
+                    <div>North</div>
+                    <div>↑</div>
+                    <div id="status_Lane_North" class="red">Red</div>
+                    <div id="count_Lane_North">0</div>
+                    <div>42 m</div>
+                    <div>0.73</div>
+                </div>
+
+                <div class="table-row" id="row_Lane_South">
+                    <div>South</div>
+                    <div>↓</div>
+                    <div id="status_Lane_South" class="red">Red</div>
+                    <div id="count_Lane_South">0</div>
+                    <div>38 m</div>
+                    <div>0.66</div>
+                </div>
+
+                <div class="table-row selected" id="row_Lane_East">
+                    <div>East</div>
+                    <div>→</div>
+                    <div id="status_Lane_East" class="green-text">Green</div>
+                    <div id="count_Lane_East">0</div>
+                    <div>72 m</div>
+                    <div class="green-text">1.38</div>
+                </div>
+
+                <div class="table-row" id="row_Lane_West">
+                    <div>West</div>
+                    <div>←</div>
+                    <div id="status_Lane_West" class="red">Red</div>
+                    <div id="count_Lane_West">0</div>
+                    <div>58 m</div>
+                    <div class="green-text">1.21</div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ================= RIGHT SECTION ================= -->
+
+        <section class="right-section">
+
+
+            <!-- SIGNAL CONTROLLER -->
+
+            <div class="card signal-card">
+
+                <h2>Signal Controller</h2>
+
+                <div class="signal-content">
+
+                    <div class="traffic-light">
+
+                        <div class="light red-light"></div>
+
+                        <div class="light yellow-light"></div>
+
+                        <div class="light green-light active"></div>
+
+                    </div>
+
+
+                    <div class="signal-info">
+
+                        <div class="timer">
+
+                            <span id="timer">18</span>
+
+                            <small>s</small>
+
+                        </div>
+
+
+                        <div class="phase">
+
+                            <span class="green-text">
+                                GREEN
+                            </span>
+
+                            —
+                            <span id="phase">
+                                East-West
+                            </span>
+
+                        </div>
+
+
+                        <div class="next">
+                            Next:
+                            <strong id="nextPhase">
+                                North-South
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- INTERSECTION -->
+
+            <div class="card intersection-card">
+
+                <h2>Intersection Overview</h2>
+
+
+                <div class="intersection-content">
+
+
+                    <div class="intersection-map">
+
+                        <div class="map-horizontal"></div>
+
+                        <div class="map-vertical"></div>
+
+                        <div class="arrow east-arrow">
+                            →
+                        </div>
+
+                        <div class="arrow west-arrow">
+                            ←
+                        </div>
+
+                        <span class="north">N</span>
+                        <span class="south">S</span>
+                        <span class="east">E</span>
+                        <span class="west">W</span>
+
+                    </div>
+
+
+                    <div class="phase-panel">
+
+                        <p>Selected Phase</p>
+
+                        <h3 id="selectedPhase">
+                            East-West
+                        </h3>
+
+
+                        <div class="progress-label">
+
+                            <span>
+                                Phase Time Elapsed
+                            </span>
+
+                            <b id="elapsed">
+                                42 s
+                            </b>
+
+                        </div>
+
+                        <div class="progress-bar">
+                            <div id="elapsedBar"></div>
+                        </div>
+
+
+                        <div class="progress-label">
+
+                            <span>
+                                Phase Time Remaining
+                            </span>
+
+                            <b id="remaining">
+                                18 s
+                            </b>
+
+                        </div>
+
+                        <div class="progress-bar">
+                            <div id="remainingBar"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DECISION -->
+
+            <div class="card decision-card">
+
+                <div class="brain">
+                    🧠
+                </div>
+
+                <div>
+
+                    <p>
+                        Decision Explanation
+                    </p>
+
+                    <h3>
+                        <span id="decisionPhase">
+                            East-West
+                        </span>
+                        selected:
+                    </h3>
+
+                    <strong>
+                        highest traffic pressure.
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= BOTTOM CARDS ================= -->
+
+    <section class="bottom-grid">
+
+
+        <!-- TRAFFIC DENSITY -->
+
+        <div class="card metric-card">
+
+            <div class="metric-icon green-icon">
+                🚗
+            </div>
+
+            <div>
+
+                <p>Traffic Density</p>
+
+                <h3>High</h3>
+
+                <small>
+                    0.78 veh/m
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- WAIT TIME -->
+
+        <div class="card metric-card">
+
+            <div class="metric-icon blue-icon">
+                ◷
+            </div>
+
+            <div>
+
+                <p>Average Wait Time</p>
+
+                <h3>
+                    28 <small>s</small>
+                </h3>
+
+                <small>
+                    All approaches
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- THROUGHPUT -->
+
+        <div class="card metric-card">
+
+            <div class="metric-icon purple-icon">
+                ↗
+            </div>
+
+            <div>
+
+                <p>Throughput (15 min)</p>
+
+                <h3>
+                    1,248 <small>veh</small>
+                </h3>
+
+                <small>
+                    Total processed
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- CONFIDENCE -->
+
+        <div class="card metric-card">
+
+            <div class="metric-icon cyan-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <p>Decision Confidence</p>
+
+                <h3>87%</h3>
+
+                <small class="green-text">
+                    High
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- ARDUINO -->
+
+        <div class="card metric-card">
+
+            <div class="metric-icon green-icon">
+                🔌
+            </div>
+
+            <div>
+
+                <p>System Connection</p>
+
+                <h3 class="connection">
+                    Arduino connected
+                </h3>
+
+                <small>
+                    Serial: COM3
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- SAFETY -->
+
+        <div class="card metric-card">
+
+            <div class="metric-icon yellow-icon">
+                🔒
+            </div>
+
+            <div>
+
+                <p>Safety Status</p>
+
+                <h3 class="warning">
+                    All conflicting
+                    signals locked
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHART -->
+
+        <div class="card chart-card">
+
+            <div class="chart-header">
+
+                <span>
+                    Traffic Trend (Last 15 Minutes)
+                </span>
+
+                <span class="legend">
+                    ━ Throughput (veh)
+                </span>
+
+            </div>
+
+            <canvas id="trafficChart"></canvas>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

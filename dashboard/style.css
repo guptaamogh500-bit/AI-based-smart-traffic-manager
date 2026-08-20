@@ -1,0 +1,1199 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+
+    --background: #020b15;
+    --card: #071725;
+    --card2: #091b2b;
+
+    --border: rgba(255,255,255,0.12);
+
+    --text: #edf5fa;
+    --muted: #9eafbd;
+
+    --green: #52ed70;
+    --blue: #3d7dff;
+    --red: #ff4242;
+    --yellow: #f3c62d;
+    --purple: #9a61ff;
+    --cyan: #26d7e0;
+}
+
+body {
+
+    background:
+        radial-gradient(
+            circle at top,
+            #0b2338,
+            #020b15 55%
+        );
+
+    color: var(--text);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    min-height: 100vh;
+}
+
+.dashboard {
+
+    width: 96%;
+    max-width: 1600px;
+
+    margin: auto;
+
+    padding: 25px 0;
+}
+
+
+/* ================= HEADER ================= */
+
+.header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+.logo-section {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.logo-dot {
+
+    width: 11px;
+    height: 11px;
+
+    background: var(--green);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 15px var(--green);
+}
+
+.logo-section h1 {
+
+    font-size: 27px;
+}
+
+.logo-section p {
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    margin-top: 3px;
+}
+
+.system-status {
+
+    display: flex;
+
+    gap: 20px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.online {
+
+    color: var(--green);
+}
+
+
+/* ================= CARD ================= */
+
+.card {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8,26,42,0.98),
+            rgba(3,15,25,0.98)
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.18);
+}
+
+
+/* ================= MAIN GRID ================= */
+
+.main-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        2fr 1.05fr;
+
+    gap: 15px;
+}
+
+
+/* ================= VIDEO ================= */
+
+.video-card {
+
+    overflow: hidden;
+}
+
+.video-header {
+
+    height: 45px;
+
+    padding: 0 15px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-size: 11px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.video-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    flex-wrap: wrap;
+}
+
+.status-tag {
+
+    color: #a8bac7;
+}
+
+.status-tag::first-letter {
+
+    color: var(--green);
+}
+
+
+/* ================= TRAFFIC SCENE ================= */
+
+.traffic-scene {
+
+    height: 440px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background: #244035;
+}
+
+.city {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #17352f 0 14%,
+            transparent 14% 86%,
+            #17352f 86%
+        ),
+
+        linear-gradient(
+            #204437,
+            #304b3b
+        );
+}
+
+
+/* roads */
+
+.horizontal-road {
+
+    position: absolute;
+
+    width: 100%;
+
+    height: 235px;
+
+    top: 105px;
+
+    background: #28353a;
+
+    box-shadow:
+        inset 0 0 45px #000;
+}
+
+.vertical-road {
+
+    position: absolute;
+
+    width: 250px;
+
+    height: 100%;
+
+    left: calc(50% - 125px);
+
+    background: #28353a;
+
+    box-shadow:
+        inset 0 0 45px #000;
+}
+
+
+/* road markings */
+
+.horizontal-road::before,
+.horizontal-road::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    border-top:
+        2px dashed
+        rgba(255,255,255,.3);
+}
+
+.horizontal-road::before {
+
+    top: 55px;
+}
+
+.horizontal-road::after {
+
+    bottom: 55px;
+}
+
+.vertical-road::before,
+.vertical-road::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    bottom: 0;
+
+    border-left:
+        2px dashed
+        rgba(255,255,255,.3);
+}
+
+.vertical-road::before {
+
+    left: 80px;
+}
+
+.vertical-road::after {
+
+    right: 80px;
+}
+
+
+/* ================= CROSSWALKS ================= */
+
+.crosswalk {
+
+    position: absolute;
+
+    z-index: 3;
+
+    opacity: .9;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            white 0 11px,
+            transparent 11px 20px
+        );
+}
+
+.crosswalk.top,
+.crosswalk.bottom {
+
+    width: 220px;
+
+    height: 24px;
+
+    left: calc(50% - 110px);
+}
+
+.crosswalk.top {
+
+    top: 92px;
+}
+
+.crosswalk.bottom {
+
+    bottom: 78px;
+}
+
+.crosswalk.left,
+.crosswalk.right {
+
+    width: 24px;
+
+    height: 165px;
+
+    top: 140px;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            white 0 11px,
+            transparent 11px 20px
+        );
+}
+
+.crosswalk.left {
+
+    left: 20%;
+}
+
+.crosswalk.right {
+
+    right: 20%;
+}
+
+
+/* ================= VEHICLES ================= */
+
+.vehicle {
+
+    position: absolute;
+
+    z-index: 5;
+
+    border:
+        2px solid
+        #35d95d;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4c5b5e,
+            #101a1f
+        );
+
+    border-radius: 5px;
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,.4);
+}
+
+.vehicle span {
+
+    position: absolute;
+
+    top: -21px;
+
+    left: -2px;
+
+    background: #159a3b;
+
+    color: white;
+
+    padding: 3px 5px;
+
+    font-size: 9px;
+
+    border-radius: 3px 3px 0 0;
+}
+
+.car {
+
+    width: 45px;
+    height: 67px;
+}
+
+.bus {
+
+    width: 75px;
+    height: 105px;
+}
+
+.truck {
+
+    width: 52px;
+    height: 72px;
+}
+
+.bike {
+
+    width: 23px;
+    height: 47px;
+
+    border-radius: 9px;
+}
+
+
+/* vehicle positions */
+
+.bus1 {
+
+    left: 29%;
+    top: 135px;
+
+    transform: rotate(-8deg);
+}
+
+.car1 {
+
+    left: 40%;
+    top: 45px;
+}
+
+.car2 {
+
+    left: 49%;
+    top: 40px;
+}
+
+.car3 {
+
+    left: 58%;
+    top: 50px;
+}
+
+.truck1 {
+
+    left: 66%;
+    top: 65px;
+}
+
+.car4 {
+
+    left: 44%;
+    top: 210px;
+}
+
+.bus2 {
+
+    left: 51%;
+    top: 312px;
+}
+
+.car5 {
+
+    left: 70%;
+    top: 287px;
+}
+
+.bike1 {
+
+    left: 78%;
+    top: 190px;
+}
+
+.bike2 {
+
+    left: 83%;
+    top: 195px;
+}
+
+.bike3 {
+
+    left: 88%;
+    top: 180px;
+}
+
+.car6 {
+
+    left: 20%;
+    top: 315px;
+}
+
+.car7 {
+
+    left: 30%;
+    top: 315px;
+}
+
+
+/* ================= TABLE ================= */
+
+.traffic-table {
+
+    margin-top: 8px;
+
+    overflow: hidden;
+}
+
+.table-header,
+.table-row {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        .8fr
+        1fr
+        1.4fr
+        1.3fr
+        1fr;
+
+    min-height: 44px;
+
+    align-items: center;
+
+    padding: 0 14px;
+
+    font-size: 12px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+.table-header {
+
+    color: #a9bac6;
+}
+
+.table-row > div:not(:first-child),
+.table-header > div:not(:first-child) {
+
+    text-align: center;
+}
+
+.selected {
+
+    background:
+        rgba(70,230,100,.04);
+}
+
+.red {
+
+    color: var(--red);
+}
+
+.green-text {
+
+    color: var(--green);
+}
+
+.yellow {
+
+    color: var(--yellow);
+}
+
+
+/* ================= SIGNAL ================= */
+
+.signal-card {
+
+    padding: 17px;
+}
+
+.signal-card h2,
+.intersection-card h2 {
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    margin-bottom: 15px;
+}
+
+.signal-content {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+}
+
+.traffic-light {
+
+    width: 65px;
+
+    height: 180px;
+
+    border-radius: 35px;
+
+    background: #070d13;
+
+    border:
+        1px solid
+        #26323b;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: space-around;
+}
+
+.light {
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    opacity: .4;
+}
+
+.red-light {
+
+    background: #8d1212;
+}
+
+.yellow-light {
+
+    background: #8c710e;
+}
+
+.green-light {
+
+    background: #0b8b20;
+}
+
+.light.active {
+
+    opacity: 1;
+
+    box-shadow:
+        0 0 25px
+        var(--green);
+}
+
+.signal-info {
+
+    flex: 1;
+}
+
+.timer {
+
+    font-size: 82px;
+
+    font-weight: 800;
+
+    line-height: .9;
+}
+
+.timer small {
+
+    font-size: 25px;
+
+    font-weight: normal;
+}
+
+.phase {
+
+    margin-top: 18px;
+
+    font-size: 19px;
+
+    font-weight: bold;
+}
+
+.next {
+
+    margin-top: 12px;
+
+    font-size: 13px;
+
+    color: var(--muted);
+}
+
+
+/* ================= INTERSECTION ================= */
+
+.intersection-card {
+
+    margin-top: 12px;
+
+    padding: 17px;
+}
+
+.intersection-content {
+
+    display: grid;
+
+    grid-template-columns:
+        1.1fr 1fr;
+
+    gap: 12px;
+}
+
+.intersection-map {
+
+    position: relative;
+
+    height: 200px;
+
+    background: #081019;
+
+    border-radius: 6px;
+
+    overflow: hidden;
+}
+
+.map-horizontal {
+
+    position: absolute;
+
+    width: 100%;
+
+    height: 70px;
+
+    top: 65px;
+
+    background: #29363c;
+}
+
+.map-vertical {
+
+    position: absolute;
+
+    width: 70px;
+
+    height: 100%;
+
+    left: calc(50% - 35px);
+
+    background: #29363c;
+}
+
+.arrow {
+
+    position: absolute;
+
+    top: 83px;
+
+    font-size: 35px;
+
+    color: var(--green);
+
+    text-shadow:
+        0 0 15px var(--green);
+}
+
+.east-arrow {
+
+    right: 18px;
+}
+
+.west-arrow {
+
+    left: 18px;
+}
+
+.north,
+.south,
+.east,
+.west {
+
+    position: absolute;
+
+    font-size: 11px;
+}
+
+.north {
+
+    top: 10px;
+    left: 52%;
+}
+
+.south {
+
+    bottom: 10px;
+    left: 52%;
+}
+
+.east {
+
+    right: 10px;
+    top: 48%;
+}
+
+.west {
+
+    left: 10px;
+    top: 48%;
+}
+
+
+/* phase panel */
+
+.phase-panel {
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    padding: 15px;
+
+    border-radius: 7px;
+}
+
+.phase-panel p {
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-bottom: 8px;
+}
+
+.phase-panel h3 {
+
+    color: var(--green);
+
+    margin-bottom: 20px;
+}
+
+.progress-label {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    margin: 12px 0 6px;
+}
+
+.progress-label b {
+
+    color: white;
+}
+
+.progress-bar {
+
+    height: 7px;
+
+    background: #1a2a35;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.progress-bar div {
+
+    height: 100%;
+
+    background: var(--green);
+
+    border-radius: 10px;
+}
+
+
+/* ================= DECISION ================= */
+
+.decision-card {
+
+    margin-top: 12px;
+
+    padding: 15px;
+
+    display: flex;
+
+    gap: 15px;
+
+    align-items: center;
+}
+
+.brain {
+
+    width: 55px;
+    height: 55px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(40,120,255,.08);
+
+    font-size: 30px;
+}
+
+.decision-card p {
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.decision-card h3 {
+
+    margin: 4px 0;
+
+    font-size: 16px;
+}
+
+
+/* ================= BOTTOM ================= */
+
+.bottom-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(6,1fr) 2.3fr;
+
+    gap: 12px;
+
+    margin-top: 12px;
+}
+
+.metric-card {
+
+    min-height: 140px;
+
+    padding: 17px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+.metric-icon {
+
+    min-width: 55px;
+
+    height: 55px;
+
+    border:
+        2px solid
+        currentColor;
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    font-size: 25px;
+}
+
+.green-icon {
+
+    color: var(--green);
+}
+
+.blue-icon {
+
+    color: var(--blue);
+}
+
+.purple-icon {
+
+    color: var(--purple);
+}
+
+.cyan-icon {
+
+    color: var(--cyan);
+}
+
+.yellow-icon {
+
+    color: var(--yellow);
+}
+
+.metric-card p {
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-bottom: 6px;
+}
+
+.metric-card h3 {
+
+    font-size: 17px;
+}
+
+.metric-card small {
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    display: block;
+
+    margin-top: 6px;
+}
+
+.connection {
+
+    color: var(--green);
+
+    font-size: 13px !important;
+}
+
+.warning {
+
+    color: var(--yellow);
+
+    font-size: 12px !important;
+}
+
+
+/* ================= CHART ================= */
+
+.chart-card {
+
+    padding: 13px 15px;
+}
+
+.chart-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 11px;
+
+    color: #b4c2ce;
+
+    margin-bottom: 5px;
+}
+
+.legend {
+
+    color: #c9d5df;
+}
+
+#trafficChart {
+
+    height: 105px !important;
+
+    width: 100% !important;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1200px) {
+
+    .main-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .bottom-grid {
+
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+    .chart-card {
+
+        grid-column:
+            span 3;
+    }
+}
+
+
+@media(max-width:700px) {
+
+    .dashboard {
+
+        width: 94%;
+    }
+
+    .header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 10px;
+    }
+
+    .system-status {
+
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+    .traffic-scene {
+
+        height: 330px;
+    }
+
+    .table-header,
+    .table-row {
+
+        grid-template-columns:
+            1fr
+            .5fr
+            1fr
+            1fr;
+    }
+
+    .table-header div:nth-child(5),
+    .table-header div:nth-child(6),
+    .table-row div:nth-child(5),
+    .table-row div:nth-child(6) {
+
+        display: none;
+    }
+
+    .intersection-content {
+
+        grid-template-columns: 1fr;
+    }
+
+    .bottom-grid {
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .chart-card {
+
+        grid-column:
+            span 2;
+    }
+}

@@ -1,0 +1,7 @@
+# Ignore videos
+*.mp4
+data/videos/
+
+# Ignore Python caches
+__pycache__/
+*.py
